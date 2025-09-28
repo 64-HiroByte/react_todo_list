@@ -15,10 +15,8 @@ export const BaseButton: FC<Props> = ({
 }) => {
   const baseClasses = [
     "rounded-md",
-    // "bg-green-700",
     "px-4",
     "py-2",
-    "mx-1", // TODO: 後でマージンを調整する
     "text-white",
     "hover:opacity-80 cursor-pointer",
   ];

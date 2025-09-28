@@ -1,3 +1,3 @@
 export const Title = () => {
-  return <h1>Todo App</h1>;
+  return <h1 className="text-6xl">Todo App (React19)</h1>;
 };
