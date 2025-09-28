@@ -1,16 +1,30 @@
 import "./App.css";
+import { CancelButton } from "./components/atoms/button/CancelButton";
+import { DeleteButton } from "./components/atoms/button/DeleteButton";
+import { EditButton } from "./components/atoms/button/EditButton";
+// import { BaseButton } from "./components/atoms/button/BaseButton";
+import { SaveButton } from "./components/atoms/button/SaveButton";
+import { Title } from "./components/atoms/title/Title";
 
 function App() {
   // const [count, setCount] = useState(0)
 
   return (
     <div>
-      <h1 className="text-3xl font-bold">Todo List</h1>
+      <Title />
       {/* 入力エリア */}
       <div>
         <h2>今日は何する？</h2>
         <input className="border bg-green-50" type="text" />
-        <button>保存</button>
+
+        {/* <BaseButton className="" text="ベース" /> */}
+        <SaveButton />
+        <SaveButton text="保存" className="w-28" />
+        <EditButton />
+        <DeleteButton />
+        <CancelButton className="w-28" />
+        {/* 編集 */}
+        {/* </BaseButton> */}
       </div>
       {/* Todoのリスト */}
       <div>
