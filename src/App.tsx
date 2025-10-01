@@ -4,37 +4,33 @@ import type { ChangeEvent } from "react";
 import "./App.css";
 import { Title } from "./components/atoms/title/Title";
 import type { TodoType } from "./types/todo";
-
-// import { Checkbox } from "./components/atoms/input/Checkbox";
-// import { TextInput } from "./components/atoms/input/TextInput";
-// import { EditDeleteButtons } from "./components/molecules/buttons/EditDeleteButtons";
-// import { DeleteCancelButtons } from "./components/molecules/buttons/DeleteCancelButtons";
-// import { InputGroup } from "./components/organisms/InputGroup";
-// import { ListItem } from "./components/organisms/ListItem";
+import { InputGroup } from "./components/organisms/InputGroup";
 
 function App() {
   const [todoText, setTodoText] = useState("");
   const [todos, setTodos] = useState<Array<TodoType>>([]);
   const id = useRef(0);
 
-  const onChageTodotext = (event: ChangeEvent<HTMLInputElement>) =>
-    setTodoText(event.target.value);
+  // const onChageTodotext = (event: ChangeEvent<HTMLInputElement>) =>
+  //   setTodoText(event.target.value);
 
   // 追加ボタン
-  const onClickAdd = () => {
-    if (!todoText.trim()) return;
-
+  const handleAddTodo = (title: string) => {
     const newTodo: TodoType = {
       id: id.current++,
-      title: todoText.trim(),
+      title: title,
       completed: false,
       isEditting: false,
     };
-
-    const newTodos: Array<TodoType> = [...todos, newTodo];
-    setTodos(newTodos);
-    setTodoText("");
+    setTodos((todos) => [...todos, newTodo]);
   };
+  // const onClickAdd = () => {
+  //   if (!todoText.trim()) return;
+
+  //   const newTodos: Array<TodoType> = [...todos, newTodo];
+  //   setTodos(newTodos);
+  //   setTodoText("");
+  // };
 
   // チェックボックスのトグル切り替え
   const onChangeCompleted = (id: number) => {
@@ -69,7 +65,8 @@ function App() {
       {/* 入力エリア */}
       <div>
         <h2>今日は何する？</h2>
-        <input
+        <InputGroup onAddTodo={handleAddTodo} />
+        {/* <input
           className="border bg-green-50"
           type="text"
           value={todoText}
@@ -77,7 +74,7 @@ function App() {
         />
         <button className="bg-blue-400" onClick={onClickAdd}>
           追加
-        </button>
+        </button> */}
       </div>
       <br />
       {/* <InputGroup />
@@ -91,15 +88,15 @@ function App() {
             <li key={todo.id}>
               {todo.isEditting ? (
                 <>
-                  <input
+                  {/* <input
                     className="border bg-green-50"
                     type="text"
                     value={todoText}
-                    onChange={onChageTodotext}
+                    // onChange={onChageTodotext}
                   />
                   <button className="bg-blue-400" onClick={onClickAdd}>
                     追加
-                  </button>
+                  </button> */}
                 </>
               ) : (
                 <>

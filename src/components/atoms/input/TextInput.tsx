@@ -1,16 +1,20 @@
-import type { FC } from "react";
+import type { ChangeEvent, FC } from "react";
 
 type Props = {
   className?: string;
-  onChange?: () => void;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
-  //   type?: "text" | "checkbox";
+  value?: string;
 };
 
-export const TextInput: FC<Props> = ({ className = "", placeholder = "" }) => {
+export const TextInput: FC<Props> = ({
+  className = "",
+  onChange,
+  placeholder = "",
+  value,
+}) => {
   const baseClasses = [
     "bg-gray-50",
-    "",
     "px-4",
     "py-2",
     "rounded-md",
@@ -20,8 +24,10 @@ export const TextInput: FC<Props> = ({ className = "", placeholder = "" }) => {
   return (
     <input
       type="text"
+      value={value}
       placeholder={placeholder}
       className={`${baseClasses.join(" ")} ${className}`}
+      onChange={onChange}
     />
   );
 };
