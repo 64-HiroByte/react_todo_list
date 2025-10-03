@@ -2,5 +2,5 @@ export type TodoType = {
   id: number;
   title: string;
   completed: boolean;
-  isEditting: boolean;
+  // isEditing: boolean;
 };

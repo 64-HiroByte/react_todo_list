@@ -4,13 +4,16 @@ import { BaseButtons } from "./BaseButtons";
 import { EditButton } from "../../atoms/button/EditButton";
 import { DeleteButton } from "../../atoms/button/DeleteButton";
 
-type Props = {};
+type Props = {
+  onEdit: () => void;
+  onDelete: () => void;
+};
 
-export const EditDeleteButtons: FC<Props> = () => {
+export const EditDeleteButtons: FC<Props> = ({ onEdit, onDelete }) => {
   return (
     <BaseButtons>
-      <EditButton />
-      <DeleteButton />
+      <EditButton onClick={onEdit} />
+      <DeleteButton onClick={onDelete} />
     </BaseButtons>
   );
 };

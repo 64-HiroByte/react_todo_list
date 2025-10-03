@@ -1,18 +1,17 @@
 import { useRef, useState } from "react";
-import type { ChangeEvent } from "react";
 
 import "./App.css";
 import { Title } from "./components/atoms/title/Title";
 import type { TodoType } from "./types/todo";
 import { InputGroup } from "./components/organisms/InputGroup";
+import { TodoList } from "./components/organisms/TodoList";
+import { Button } from "./components/atoms/button/Button";
 
 function App() {
-  const [todoText, setTodoText] = useState("");
+  // const [todoText, setTodoText] = useState("");
   const [todos, setTodos] = useState<Array<TodoType>>([]);
+  const [editingId, setEditingId] = useState<number | null>(null);
   const id = useRef(0);
-
-  // const onChageTodotext = (event: ChangeEvent<HTMLInputElement>) =>
-  //   setTodoText(event.target.value);
 
   // 追加ボタン
   const handleAddTodo = (title: string) => {
@@ -20,17 +19,10 @@ function App() {
       id: id.current++,
       title: title,
       completed: false,
-      isEditting: false,
+      // isEditing: false,
     };
     setTodos((todos) => [...todos, newTodo]);
   };
-  // const onClickAdd = () => {
-  //   if (!todoText.trim()) return;
-
-  //   const newTodos: Array<TodoType> = [...todos, newTodo];
-  //   setTodos(newTodos);
-  //   setTodoText("");
-  // };
 
   // チェックボックスのトグル切り替え
   const onChangeCompleted = (id: number) => {
@@ -41,18 +33,25 @@ function App() {
     );
   };
 
-  // 削除ボタン
-  const onClickDelete = (id: number) => {
-    setTodos((todos) => todos.filter((todo) => todo.id !== id));
+  const handleEditStart = (id: number) => {
+    setEditingId(id);
   };
 
   // 編集ボタン
-  const onClickEdit = (id: number) => {
+  const handleSaveEdit = (id: number, newTitle: string) => {
     setTodos((todos) =>
       todos.map((todo) =>
-        todo.id === id ? { ...todo, isEditting: true } : todo,
+        todo.id === id
+          ? { ...todo, title: newTitle.trim() || todo.title }
+          : todo,
       ),
     );
+    setEditingId(null);
+  };
+
+  // 削除ボタン
+  const onClickDelete = (id: number) => {
+    setTodos((todos) => todos.filter((todo) => todo.id !== id));
   };
 
   const todoCount: number = todos.length;
@@ -65,67 +64,22 @@ function App() {
       {/* 入力エリア */}
       <div>
         <h2>今日は何する？</h2>
-        <InputGroup onAddTodo={handleAddTodo} />
-        {/* <input
-          className="border bg-green-50"
-          type="text"
-          value={todoText}
-          onChange={onChageTodotext}
-        />
-        <button className="bg-blue-400" onClick={onClickAdd}>
-          追加
-        </button> */}
+        <Button label="保存" className="bg-blue-800" />
+        {/* <InputGroup onAddTodo={handleAddTodo} /> */}
       </div>
       <br />
-      {/* <InputGroup />
-      <ListItem /> */}
 
       {/* Todoのリスト */}
       <div>
         {/* リスト */}
-        <ul>
-          {todos.map((todo) => (
-            <li key={todo.id}>
-              {todo.isEditting ? (
-                <>
-                  {/* <input
-                    className="border bg-green-50"
-                    type="text"
-                    value={todoText}
-                    // onChange={onChageTodotext}
-                  />
-                  <button className="bg-blue-400" onClick={onClickAdd}>
-                    追加
-                  </button> */}
-                </>
-              ) : (
-                <>
-                  <input
-                    type="checkbox"
-                    onChange={() => onChangeCompleted(todo.id)}
-                    checked={todo.completed}
-                  />
-                  {todo.id}: {todo.title}, {todo.completed ? "✅️" : ""}
-                  {/* 削除ボタン */}
-                  <button
-                    className="bg-red-500"
-                    onClick={() => onClickDelete(todo.id)}
-                  >
-                    削除
-                  </button>
-                  {/* 編集ボタン */}
-                  <button
-                    className="bg-green-500"
-                    onClick={() => onClickEdit(todo.id)}
-                  >
-                    編集
-                  </button>
-                </>
-              )}
-            </li>
-          ))}
-          {/* <li><input type="checkbox"></li> */}
-        </ul>
+        {/* <TodoList
+          todos={todos}
+          editingId={editingId}
+          onToggle={onChangeCompleted}
+          onEditStart={handleEditStart}
+          onSaveEdit={handleSaveEdit}
+          onDelete={onClickDelete}
+        /> */}
 
         {/* リストの状態 */}
         <footer>

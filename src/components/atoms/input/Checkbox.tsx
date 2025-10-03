@@ -2,10 +2,17 @@ import type { FC } from "react";
 
 type Props = {
   className?: string;
-  onChange?: () => void;
-  //   type?: "text" | "checkbox";
+  checked: boolean;
+  onChange: () => void;
 };
 
-export const Checkbox: FC<Props> = ({ className = "" }) => {
-  return <input type="checkbox" className={className} />;
+export const Checkbox: FC<Props> = ({ className = "", checked, onChange }) => {
+  return (
+    <input
+      type="checkbox"
+      className={className}
+      checked={checked}
+      onChange={onChange}
+    />
+  );
 };

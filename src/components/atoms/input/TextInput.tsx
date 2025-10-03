@@ -5,6 +5,7 @@ type Props = {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   value?: string;
+  disabled?: boolean;
 };
 
 export const TextInput: FC<Props> = ({
@@ -12,6 +13,7 @@ export const TextInput: FC<Props> = ({
   onChange,
   placeholder = "",
   value,
+  disabled = false,
 }) => {
   const baseClasses = [
     "bg-gray-50",
@@ -28,6 +30,7 @@ export const TextInput: FC<Props> = ({
       placeholder={placeholder}
       className={`${baseClasses.join(" ")} ${className}`}
       onChange={onChange}
+      disabled={disabled}
     />
   );
 };
