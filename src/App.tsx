@@ -3,12 +3,11 @@ import { useRef, useState } from "react";
 import "./App.css";
 import { Title } from "./components/atoms/title/Title";
 import type { TodoType } from "./types/todo";
-import { InputGroup } from "./components/organisms/InputGroup";
-import { TodoList } from "./components/organisms/TodoList";
-import { Button } from "./components/atoms/button/Button";
+// import { TodoList } from "./components/organisms/TodoList";
+import { TextForm } from "./components/molecules/TextForm";
 
-function App() {
-  // const [todoText, setTodoText] = useState("");
+function App(disabled: boolean) {
+  const [todoText, setTodoText] = useState("");
   const [todos, setTodos] = useState<Array<TodoType>>([]);
   const [editingId, setEditingId] = useState<number | null>(null);
   const id = useRef(0);
@@ -19,9 +18,9 @@ function App() {
       id: id.current++,
       title: title,
       completed: false,
-      // isEditing: false,
     };
     setTodos((todos) => [...todos, newTodo]);
+    console.log(todos);
   };
 
   // チェックボックスのトグル切り替え
@@ -64,8 +63,7 @@ function App() {
       {/* 入力エリア */}
       <div>
         <h2>今日は何する？</h2>
-        <Button label="保存" className="bg-blue-800" />
-        {/* <InputGroup onAddTodo={handleAddTodo} /> */}
+        <TextForm buttonLabel="追加" onSubmit={handleAddTodo} />
       </div>
       <br />
 

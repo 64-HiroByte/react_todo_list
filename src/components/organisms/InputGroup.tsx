@@ -1,18 +1,21 @@
 import { useState } from "react";
 import type { ChangeEvent, FC } from "react";
 
-import { SaveButton } from "../atoms/button/SaveButton";
+// import { SaveButton } from "../atoms/button/SaveButton";
 import { TextInput } from "../atoms/input/TextInput";
+import { Button } from "../atoms/button/Button";
 
 type Props = {
-  onSave: (text: string) => void;
-  onAddTodo: (title: string) => void;
+  label: string;
+  onSave?: (text: string) => void;
+  onAddTodo?: (title: string) => void;
   initialValue?: string;
-  placeholder: string;
+  placeholder?: string;
   disabled?: boolean;
 };
 
 export const InputGroup: FC<Props> = ({
+  label,
   onSave,
   initialValue = "",
   placeholder = "タスクを入力してください",
@@ -20,8 +23,9 @@ export const InputGroup: FC<Props> = ({
 }) => {
   const [todoText, setTodoText] = useState(initialValue);
 
-  const onChangeTodotext = (event: ChangeEvent<HTMLInputElement>) =>
-    setTodoText(event.target.value);
+  const onChangeTodotext = (e: ChangeEvent<HTMLInputElement>) =>
+    e.preventDefault();
+  setTodoText(e.target.value);
 
   //   const handleAdd = () => {
   //     if (!todoText.trim()) return;
@@ -30,15 +34,15 @@ export const InputGroup: FC<Props> = ({
   //   };
 
   return (
-    <div className="flex gap-2">
+    <form className="flex gap-2">
       <TextInput
         value={todoText}
         placeholder={placeholder}
         className="w-146"
-        onChange={onChangeTodotext}
+        onChange={(e) => setTodoText(e.target.value)}
         disabled={disabled}
       />
-      <SaveButton onClick={() => onSave(todoText)} />
-    </div>
+      <Button label={label} type="submit" />
+    </form>
   );
 };
