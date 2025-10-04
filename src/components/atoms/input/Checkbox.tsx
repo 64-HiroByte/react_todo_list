@@ -25,6 +25,7 @@ export const Checkbox: FC<Props> = ({
       className={checkboxStyle}
       checked={checked}
       onChange={onChange}
+      disabled={disabled}
     />
   );
 };
