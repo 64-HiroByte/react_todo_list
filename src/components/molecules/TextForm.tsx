@@ -9,10 +9,17 @@ type Props = {
   buttonLabel: string;
   onSubmit?: (value: string) => void;
   disabled?: boolean;
+  isEditMode?: boolean;
 };
 
 export const TextForm: FC<Props> = memo((props) => {
-  const { buttonLabel, onSubmit, disabled = false, initialValue = "" } = props;
+  const {
+    buttonLabel,
+    onSubmit,
+    disabled = false,
+    initialValue = "",
+    isEditMode = false,
+  } = props;
 
   const [todoText, setTodoText] = useState(initialValue);
 
@@ -26,6 +33,8 @@ export const TextForm: FC<Props> = memo((props) => {
 
     setTodoText(initialValue);
   };
+
+  const isButtonDisabled = disabled || (!isEditMode && todoText.trim() === "");
 
   return (
     <form
@@ -41,7 +50,7 @@ export const TextForm: FC<Props> = memo((props) => {
       <Button
         label={buttonLabel}
         className="bg-blue-700"
-        disabled={disabled}
+        disabled={isButtonDisabled}
         type="submit"
       />
     </form>

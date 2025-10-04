@@ -31,6 +31,7 @@ export const TodoItem: FC<Props> = memo((props) => {
           initialValue={todo.title}
           disabled={!isEditing}
           onSubmit={(newTitle) => onEditSave(todo.id, newTitle)}
+          isEditMode={true}
         />
       ) : (
         <div className="flex items-center justify-between gap-2 border-b border-gray-400 p-2">

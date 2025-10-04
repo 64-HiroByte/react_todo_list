@@ -92,6 +92,7 @@ function App() {
           buttonLabel="追加"
           onSubmit={handleAddTodo}
           disabled={editingId !== null}
+          isEditMode={false}
         />
       </div>
 
