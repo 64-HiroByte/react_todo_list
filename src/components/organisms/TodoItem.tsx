@@ -42,7 +42,8 @@ export const TodoItem: FC<Props> = memo((props) => {
             disabled={isDisabled}
           />
           <Span
-            className={`flex-1 truncate ${todo.completed && "text-gray-400 line-through"}`}
+            className={`flex-1 truncate ${todo.completed && "line-through"}`}
+            color={`${todo.completed && "text-gray-500"}`}
             text={todo.title}
           />
           <div className="flex flex-shrink-0 gap-2">

@@ -4,15 +4,20 @@ type Props = {
   className?: string;
   text: string;
   fontSize?: number;
+  color?: string;
 };
 
 export const Span: FC<Props> = (props) => {
-  const { className = "", fontSize = 18, text } = props;
+  const {
+    className = "",
+    fontSize = 18,
+    color = "text-gray-900",
+    text,
+  } = props;
 
-  const baseStyle = ["text-gray-900"];
-  const disabledStyle = [""];
+  const baseStyle = [color];
 
-  const textStyle = [...baseStyle, ...disabledStyle, className].join(" ");
+  const textStyle = [...baseStyle, className].join(" ");
 
   return (
     // fontSizeは動的に設定するため、別途 style で定義する
