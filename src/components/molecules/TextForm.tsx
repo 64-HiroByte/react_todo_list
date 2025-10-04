@@ -34,7 +34,8 @@ export const TextForm: FC<Props> = memo((props) => {
     setTodoText(initialValue);
   };
 
-  const isButtonDisabled = disabled || (!isEditMode && todoText.trim() === "");
+  //
+  const isButtonDisabled = !isEditMode && todoText.trim() === "";
 
   return (
     <form
