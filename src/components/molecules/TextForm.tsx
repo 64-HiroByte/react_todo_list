@@ -6,7 +6,7 @@ type Props = {
   initialValue?: string;
   buttonLabel: string;
   onSubmit?: (value: string) => void;
-  disabled: boolean;
+  disabled?: boolean;
 };
 
 export const TextForm: FC<Props> = (props) => {
@@ -20,6 +20,8 @@ export const TextForm: FC<Props> = (props) => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (onSubmit) onSubmit(todoText);
+    // onSubmit?.(todoText);  // オプショナルチェイニングによる記述
+
     setTodoText(initialValue);
   };
 

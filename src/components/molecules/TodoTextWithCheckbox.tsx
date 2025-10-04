@@ -15,7 +15,11 @@ export const TodoTextWithCheckbox: FC<Props> = ({
 }) => {
   return (
     <div className="flex items-center gap-2">
-      <Checkbox className="size-6" checked={completed} onChange={onToggle} />
+      <Checkbox
+        className="size-6 cursor-pointer"
+        checked={completed}
+        onChange={onToggle}
+      />
       <span className={completed ? "text-gray-400 line-through" : ""}>
         {text}
       </span>

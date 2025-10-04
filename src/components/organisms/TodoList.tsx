@@ -1,15 +1,16 @@
 import type { FC } from "react";
 
-import { ListItem } from "./ListItem";
+// import { ListItem } from "./ListItem";
 import type { TodoType } from "../../types/todo";
+import { TodoItem } from "../molecules/TodoItem";
 
 type Props = {
   todos: Array<TodoType>;
   editingId: number | null;
   onToggle: (id: number) => void;
   onEditStart: (id: number) => void;
-  onSaveEdit: (id: number) => void;
-  onDelete: (id: number) => void;
+  onEditSave: (id: number, newTitle: string) => void;
+  onDelete: (todo: TodoType) => void;
 };
 
 export const TodoList: FC<Props> = ({
@@ -17,7 +18,7 @@ export const TodoList: FC<Props> = ({
   editingId,
   onToggle,
   onEditStart,
-  onSaveEdit,
+  onEditSave,
   onDelete,
 }) => {
   if (todos.length === 0) {
@@ -26,15 +27,14 @@ export const TodoList: FC<Props> = ({
   return (
     <div className="mt-4 space-y-2">
       {todos.map((todo) => (
-        <ListItem
+        <TodoItem
           key={todo.id}
           todo={todo}
-          isEditing={todo.id === editingId}
-          onToggle={onToggle}
-          onEditStart={onEditStart}
-          onSaveEdit={onSaveEdit}
-          onDelete={onDelete}
-          disableActions={editingId !== null && todo.id !== editingId}
+          editingId={editingId}
+          onToggle={() => onToggle(todo.id)}
+          onEditStart={() => onEditStart(todo.id)}
+          onEditSave={onEditSave}
+          onDelete={() => onDelete(todo)}
         />
       ))}
     </div>

@@ -3,28 +3,35 @@ import { useRef, useState } from "react";
 import "./App.css";
 import { Title } from "./components/atoms/title/Title";
 import type { TodoType } from "./types/todo";
-// import { TodoList } from "./components/organisms/TodoList";
+import { TodoList } from "./components/organisms/TodoList";
 import { TextForm } from "./components/molecules/TextForm";
+import { ConfirmModal } from "./components/molecules/ConfirmModal";
 
-function App(disabled: boolean) {
-  const [todoText, setTodoText] = useState("");
+function App() {
+  // state
   const [todos, setTodos] = useState<Array<TodoType>>([]);
   const [editingId, setEditingId] = useState<number | null>(null);
-  const id = useRef(0);
+  const [showModal, setShowModal] = useState(false);
+  const [deleteTarget, setDeleteTargert] = useState<TodoType | null>(null);
 
-  // 追加ボタン
+  // useRefでkeyとなるIDの採番
+  const id = useRef(1);
+
+  /** --- CRUD操作 --- */
+  // 新規登録
   const handleAddTodo = (title: string) => {
+    if (!title.trim()) return;
+
     const newTodo: TodoType = {
       id: id.current++,
       title: title,
       completed: false,
     };
     setTodos((todos) => [...todos, newTodo]);
-    console.log(todos);
   };
 
-  // チェックボックスのトグル切り替え
-  const onChangeCompleted = (id: number) => {
+  // 完了状態の切り替え
+  const handleToggle = (id: number) => {
     setTodos((todos) =>
       todos.map((todo) =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo,
@@ -32,11 +39,12 @@ function App(disabled: boolean) {
     );
   };
 
+  // 編集対象を設定
   const handleEditStart = (id: number) => {
     setEditingId(id);
   };
 
-  // 編集ボタン
+  // 編集内容の保存
   const handleSaveEdit = (id: number, newTitle: string) => {
     setTodos((todos) =>
       todos.map((todo) =>
@@ -48,9 +56,24 @@ function App(disabled: boolean) {
     setEditingId(null);
   };
 
-  // 削除ボタン
-  const onClickDelete = (id: number) => {
-    setTodos((todos) => todos.filter((todo) => todo.id !== id));
+  // 削除確認モーダル表示
+  const handleDeleteConfirm = (todo: TodoType) => {
+    setDeleteTargert(todo);
+    setShowModal(true);
+  };
+
+  // 削除確認モーダル非表示
+  const handleCancelDelete = () => {
+    setShowModal(false);
+    setDeleteTargert(null);
+  };
+
+  // 削除の実行
+  const handleDelete = () => {
+    if (deleteTarget === null) return;
+    setTodos((todos) => todos.filter((todo) => todo.id !== deleteTarget.id));
+    setShowModal(false);
+    setDeleteTargert(null);
   };
 
   const todoCount: number = todos.length;
@@ -63,21 +86,25 @@ function App(disabled: boolean) {
       {/* 入力エリア */}
       <div>
         <h2>今日は何する？</h2>
-        <TextForm buttonLabel="追加" onSubmit={handleAddTodo} />
+        <TextForm
+          buttonLabel="追加"
+          onSubmit={handleAddTodo}
+          disabled={editingId !== null}
+        />
       </div>
       <br />
 
       {/* Todoのリスト */}
       <div>
         {/* リスト */}
-        {/* <TodoList
+        <TodoList
           todos={todos}
           editingId={editingId}
-          onToggle={onChangeCompleted}
+          onToggle={handleToggle}
           onEditStart={handleEditStart}
-          onSaveEdit={handleSaveEdit}
-          onDelete={onClickDelete}
-        /> */}
+          onEditSave={handleSaveEdit}
+          onDelete={handleDeleteConfirm}
+        />
 
         {/* リストの状態 */}
         <footer>
@@ -87,6 +114,14 @@ function App(disabled: boolean) {
           </span>
         </footer>
       </div>
+      {/* 削除確認モーダル */}
+      {showModal && deleteTarget && (
+        <ConfirmModal
+          message={`タスク: 「${deleteTarget.title}」 を削除しますか？`}
+          onConfirm={handleDelete}
+          onCancel={handleCancelDelete}
+        />
+      )}
     </div>
   );
 }
