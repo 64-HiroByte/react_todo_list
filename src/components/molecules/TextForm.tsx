@@ -1,4 +1,6 @@
-import { useState, type ChangeEvent, type FC, type FormEvent } from "react";
+import { useState, memo } from "react";
+import type { ChangeEvent, FC, FormEvent } from "react";
+
 import { TextInput } from "../atoms/input/TextInput";
 import { Button } from "../atoms/button/Button";
 
@@ -9,7 +11,7 @@ type Props = {
   disabled?: boolean;
 };
 
-export const TextForm: FC<Props> = (props) => {
+export const TextForm: FC<Props> = memo((props) => {
   const { buttonLabel, onSubmit, disabled = false, initialValue = "" } = props;
 
   const [todoText, setTodoText] = useState(initialValue);
@@ -26,8 +28,16 @@ export const TextForm: FC<Props> = (props) => {
   };
 
   return (
-    <form className="flex gap-2" onSubmit={handleSubmit}>
-      <TextInput onChange={handleChange} value={todoText} className="w-120" />
+    <form
+      className="flex items-center justify-between gap-2 p-2"
+      onSubmit={handleSubmit}
+    >
+      <TextInput
+        onChange={handleChange}
+        value={todoText}
+        className="flex-1"
+        disabled={disabled}
+      />
       <Button
         label={buttonLabel}
         className="bg-blue-700"
@@ -36,4 +46,4 @@ export const TextForm: FC<Props> = (props) => {
       />
     </form>
   );
-};
+});

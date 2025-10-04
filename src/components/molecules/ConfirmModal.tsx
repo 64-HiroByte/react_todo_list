@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { Button } from "../atoms/button/Button";
+import { Span } from "../atoms/text/Span";
 
 type Props = {
   message: string;
@@ -12,9 +13,9 @@ export const ConfirmModal: FC<Props> = (props) => {
   const buttonWidth = "w-30";
 
   return (
-    <div className="bg-opacity-40 fixed inset-0 flex items-center justify-center bg-black">
-      <div className="rounded-md bg-white p-6 text-center shadow-lg">
-        <p className="mb-4">{message}</p>
+    <div className="fixed inset-0 flex items-center justify-center bg-black/20">
+      <div className="rounded-md bg-gray-100 p-6 text-center shadow-lg">
+        <Span className="mb-4 inline-block" text={message} />
         <div className="flex justify-center gap-3">
           <Button
             label="キャンセル"
