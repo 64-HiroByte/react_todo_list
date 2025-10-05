@@ -13,7 +13,7 @@ function App() {
   const [todos, setTodos] = useState<Array<TodoType>>([]);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [showModal, setShowModal] = useState(false);
-  const [deleteTarget, setDeleteTargert] = useState<TodoType | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<TodoType | null>(null);
 
   /** ---  IDの採番（keyとして使用） --- */
   const id = useRef(1);
@@ -21,11 +21,12 @@ function App() {
   /** --- CRUD操作 --- */
   // 新規登録
   const handleAddTodo = useCallback((title: string) => {
-    if (!title.trim()) return;
+    const trimmedTitle = title.trim();
+    if (!trimmedTitle) return;
 
     const newTodo: TodoType = {
       id: id.current++,
-      title: title,
+      title: trimmedTitle,
       completed: false,
     };
     setTodos((todos) => [...todos, newTodo]);
@@ -47,11 +48,18 @@ function App() {
 
   // 編集内容の保存
   const handleSaveEdit = useCallback((id: number, newTitle: string) => {
+    const trimmedTitle = newTitle.trim();
+    const targetTodo = todos.find((todo) => todo.id === id);
+
+    // falsyな値または変更がない場合は、早期リターン
+    if (!trimmedTitle || trimmedTitle === targetTodo?.title) {
+      setEditingId(null);
+      return;
+    }
+
     setTodos((todos) =>
       todos.map((todo) =>
-        todo.id === id
-          ? { ...todo, title: newTitle.trim() || todo.title }
-          : todo,
+        todo.id === id ? { ...todo, title: trimmedTitle } : todo,
       ),
     );
     setEditingId(null);
@@ -59,14 +67,14 @@ function App() {
 
   // 削除確認モーダル表示
   const handleDeleteConfirm = useCallback((todo: TodoType) => {
-    setDeleteTargert(todo);
+    setDeleteTarget(todo);
     setShowModal(true);
   }, []);
 
   // 削除確認モーダル非表示
   const handleCancelDelete = useCallback(() => {
     setShowModal(false);
-    setDeleteTargert(null);
+    setDeleteTarget(null);
   }, []);
 
   // 削除の実行
@@ -74,12 +82,13 @@ function App() {
     if (deleteTarget === null) return;
     setTodos((todos) => todos.filter((todo) => todo.id !== deleteTarget.id));
     setShowModal(false);
-    setDeleteTargert(null);
+    setDeleteTarget(null);
   }, [deleteTarget]);
 
   /** --- Todoタスク数の取得 --- */
   const todoCount: number = todos.length;
   const completedCount: number = todos.filter((todo) => todo.completed).length;
+  const incompleteCount: number = todoCount - completedCount;
 
   return (
     <div className="mx-auto w-[640px]">
@@ -121,10 +130,7 @@ function App() {
             <footer className="flex place-content-around p-2">
               <Span text={`タスク数: ${todoCount}`} fontSize={24} />
               <Span text={`完了: ${completedCount}`} fontSize={24} />
-              <Span
-                text={`未完了: ${todoCount - completedCount}`}
-                fontSize={24}
-              />
+              <Span text={`未完了: ${incompleteCount}`} fontSize={24} />
             </footer>
           </>
         )}
