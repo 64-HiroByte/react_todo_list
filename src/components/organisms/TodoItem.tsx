@@ -8,14 +8,7 @@ import { TextForm } from "../molecules/TextForm";
 import type { TodoType } from "../../types/todo";
 import type { TodoFunctionType } from "../../types/todoFunction";
 
-type Props = {
-  todo: TodoType;
-  // editingId: number | null;
-  // onToggle: (id: number) => void;
-  // onEditStart: (id: number) => void;
-  // onEditSave: (id: number, newTitle: string) => void;
-  // onDelete: (todo: TodoType) => void;
-} & TodoFunctionType;
+type Props = { todo: TodoType } & TodoFunctionType;
 
 export const TodoItem: FC<Props> = memo((props) => {
   const { todo, editingId, onToggle, onEditStart, onEditSave, onDelete } =

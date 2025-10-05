@@ -4,14 +4,7 @@ import { TodoItem } from "./TodoItem";
 import type { TodoType } from "../../types/todo";
 import type { TodoFunctionType } from "../../types/todoFunction";
 
-type Props = {
-  todos: Array<TodoType>;
-  // editingId: number | null;
-  // onToggle: (id: number) => void;
-  // onEditStart: (id: number) => void;
-  // onEditSave: (id: number, newTitle: string) => void;
-  // onDelete: (todo: TodoType) => void;
-} & TodoFunctionType;
+type Props = { todos: Array<TodoType> } & TodoFunctionType;
 
 export const TodoList: FC<Props> = memo((props) => {
   const { todos, editingId, onToggle, onEditStart, onEditSave, onDelete } =
