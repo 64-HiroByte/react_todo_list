@@ -7,7 +7,7 @@ import { Button } from "../atoms/button/Button";
 type Props = {
   initialValue?: string;
   buttonLabel: string;
-  onSubmit?: (value: string) => void;
+  onSubmit: (value: string) => void;
   disabled?: boolean;
   isEditMode?: boolean;
 };
@@ -21,21 +21,19 @@ export const TextForm: FC<Props> = memo((props) => {
     isEditMode = false,
   } = props;
 
-  const [todoText, setTodoText] = useState(initialValue);
+  const [text, setText] = useState(initialValue);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
-    setTodoText(e.target.value);
+    setText(e.target.value);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (onSubmit) onSubmit(todoText);
-    // onSubmit?.(todoText);  // オプショナルチェイニングによる記述
-
-    setTodoText(initialValue);
+    onSubmit(text);
+    setText(initialValue);
   };
 
   //
-  const isButtonDisabled = !isEditMode && todoText.trim() === "";
+  const isButtonDisabled = !isEditMode && text.trim() === "";
 
   return (
     <form
@@ -44,7 +42,7 @@ export const TextForm: FC<Props> = memo((props) => {
     >
       <TextInput
         onChange={handleChange}
-        value={todoText}
+        value={text}
         className="flex-1"
         disabled={disabled}
       />
