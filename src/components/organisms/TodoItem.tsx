@@ -6,15 +6,16 @@ import { Checkbox } from "../atoms/input/Checkbox";
 import { Span } from "../atoms/text/Span";
 import { TextForm } from "../molecules/TextForm";
 import type { TodoType } from "../../types/todo";
+import type { TodoFunctionType } from "../../types/todoFunction";
 
 type Props = {
   todo: TodoType;
-  editingId: number | null;
-  onToggle: (id: number) => void;
-  onEditStart: (id: number) => void;
-  onEditSave: (id: number, newTitle: string) => void;
-  onDelete: (id: number) => void;
-};
+  // editingId: number | null;
+  // onToggle: (id: number) => void;
+  // onEditStart: (id: number) => void;
+  // onEditSave: (id: number, newTitle: string) => void;
+  // onDelete: (todo: TodoType) => void;
+} & TodoFunctionType;
 
 export const TodoItem: FC<Props> = memo((props) => {
   const { todo, editingId, onToggle, onEditStart, onEditSave, onDelete } =
@@ -58,7 +59,7 @@ export const TodoItem: FC<Props> = memo((props) => {
               label="削除"
               className="bg-red-600"
               disabled={isDisabled}
-              onClick={() => onDelete(todo.id)}
+              onClick={() => onDelete(todo)}
               type="button"
             />
           </div>
