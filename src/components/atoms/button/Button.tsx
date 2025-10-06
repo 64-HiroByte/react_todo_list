@@ -11,12 +11,18 @@ type Props = {
 export const Button: FC<Props> = (props) => {
   const { label, className = "", onClick, disabled = false, type } = props;
 
-  const baseStyle = ["rounded-md", "h-11", "px-4", "py-2", "text-white"];
-  const disabledStyle = disabled
-    ? ["opacity-40", "cursor-not-allowed"]
-    : ["hover:opacity-80", "cursor-pointer"];
-
-  const buttonStyle = [...baseStyle, ...disabledStyle, className].join(" ");
+  const baseStyle = [
+    "rounded-md",
+    "h-11",
+    "px-4",
+    "py-2",
+    "text-white",
+    "hover:opacity-80",
+    "cursor-pointer",
+    "disabled:opacity-40",
+    "disabled:cursor-not-allowed",
+  ];
+  const buttonStyle = [...baseStyle, className].join(" ");
 
   return (
     <button

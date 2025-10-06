@@ -13,12 +13,14 @@ export const Checkbox: FC<Props> = ({
   onChange,
   disabled,
 }) => {
-  const baseStyle = ["size-6"];
-  const disabledStyle = disabled
-    ? ["opacity-40", "cursor-not-allowed"]
-    : ["cursor-pointer"];
+  const baseStyle = [
+    "size-6",
+    "cursor-pointer",
+    "disabled:opacity-40",
+    "disabled:cursor-not-allowed",
+  ];
+  const checkboxStyle = [...baseStyle, className].join(" ");
 
-  const checkboxStyle = [...baseStyle, ...disabledStyle, className].join(" ");
   return (
     <input
       type="checkbox"

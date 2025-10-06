@@ -24,11 +24,9 @@ export const TextInput: FC<Props> = (props) => {
     "rounded-md",
     "border-2",
     "border-gray-400",
+    "disabled:text-gray-400",
   ];
-
-  const disabledStyle = disabled ? ["text-gray-400"] : [];
-
-  const inputStyle = [...baseStyle, ...disabledStyle, className].join(" ");
+  const inputStyle = [...baseStyle, className].join(" ");
 
   return (
     <input
