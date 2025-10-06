@@ -47,7 +47,7 @@ export const TextForm: FC<Props> = memo((props) => {
         disabled={disabled}
       />
       <Button
-        label={buttonLabel}
+        children={buttonLabel}
         className="bg-blue-700"
         disabled={isButtonDisabled}
         type="submit"

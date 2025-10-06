@@ -42,14 +42,14 @@ export const TodoItem: FC<Props> = memo((props) => {
           />
           <div className="flex flex-shrink-0 gap-2">
             <Button
-              label="編集"
+              children="編集"
               className="bg-green-600"
               disabled={isDisabled}
               onClick={() => onEditStart(todo.id)}
               type="button"
             />
             <Button
-              label="削除"
+              children="削除"
               className="bg-red-600"
               disabled={isDisabled}
               onClick={() => onDelete(todo)}

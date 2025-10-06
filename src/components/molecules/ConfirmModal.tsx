@@ -18,13 +18,13 @@ export const ConfirmModal: FC<Props> = (props) => {
         <Span className="mb-4 inline-block" text={message} />
         <div className="flex justify-center gap-3">
           <Button
-            label="キャンセル"
+            children="キャンセル"
             className={`bg-gray-500 ${buttonWidth}`}
             onClick={onCancel}
             type="button"
           />
           <Button
-            label="削除"
+            children="削除"
             className={`bg-red-600 ${buttonWidth}`}
             onClick={onConfirm}
             type="button"

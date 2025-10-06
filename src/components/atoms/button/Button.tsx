@@ -1,15 +1,20 @@
-import type { FC } from "react";
-
-type Props = {
-  label: string;
+import type { ButtonHTMLAttributes, FC } from "react";
+// 一般的な型の指定（間違いではない）
+// type Props = {
+//   label: string;
+//   className?: string;
+//   onClick?: () => void;
+//   disabled?: boolean;
+//   type?: "button" | "submit";
+// };
+// 👇️ このように書けば型指定を省略できて、必要なものだけ追加することができる
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
-  onClick?: () => void;
-  disabled?: boolean;
-  type?: "button" | "submit";
-};
+}
 
 export const Button: FC<Props> = (props) => {
-  const { label, className = "", onClick, disabled = false, type } = props;
+  const { children, className = "", onClick, disabled = false, type } = props;
+  // const { label, className = "", onClick, disabled = false, type } = props;
 
   const baseStyle = [
     "rounded-md",
@@ -31,7 +36,7 @@ export const Button: FC<Props> = (props) => {
       disabled={disabled}
       type={type}
     >
-      {label}
+      {children}
     </button>
   );
 };
